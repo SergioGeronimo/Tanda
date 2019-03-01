@@ -18,15 +18,12 @@ import java.util.Properties;
  * @author Sergio M. Gerónimo González
  */
 
-public class JConnector {
-    
-  
-    public static String driver="com.mysql.jdbc.Driver";
+public interface JConnector {
     
     public static Connection conectDB() {
         try{
             System.out.println("Iniciando JDBC...");
-            Class.forName(driver);
+            Class.forName("com.mysql.jdbc.Driver");
             
             Properties info = new Properties();
             info.put("user", "root");

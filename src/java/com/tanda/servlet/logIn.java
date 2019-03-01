@@ -3,26 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.tanda.servlet;
 
+import com.tanda.DAO.JConnector;
+import com.tanda.DAO.UsuarioDAO;
+import com.tanda.DB.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.tanda.DAO.*;
-import com.tanda.DB.*;
-
-import java.sql.Connection;
-import java.util.Vector;
 /**
  *
- * @author Sergio M. Gerónimo González
+ * @author Sergio Gerónimo
  */
-@WebServlet(name = "prueba", urlPatterns = {"/prueba"})
-public class Prueba extends HttpServlet {
+public class logIn extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,22 +35,23 @@ public class Prueba extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        Connection conx = JConnector.conectDB();
-        Pago pago = new Pago(3, "ANNYON", "2000-02-20", 22, false);
-        
-        
-        
-        if(conx != null){
+        try{
+            Connection conx = JConnector.conectDB();
+            Usuario user = UsuarioDAO.getUsuario(
+                    Integer.valueOf(request.getParameter("ID_USUARIO")),
+                    request.getParameter("PASSWORD"),
+                    conx);
             
-           Vector<Pago> allPagos = PagoDAO.getAllPagos(22, conx);
-           
+            HttpSession session = request.getSession(true);
+            session.setAttribute("usuario", user);
             
-            request.setAttribute("pago", allPagos);
+        }catch(NullPointerException nullEx){
+            
+             System.out.println(nullEx.getMessage());
+             
         }
         
-        
-        request.getRequestDispatcher("/prueba.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

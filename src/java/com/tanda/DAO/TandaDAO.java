@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 /**
  *
@@ -17,7 +18,7 @@ import java.sql.Statement;
  */
 public interface TandaDAO {
     
-    static Tanda createTanda(Tanda tanda, Connection conx){
+    public static Tanda createTanda(Tanda tanda, Connection conx){
         
         String query = "INSERT INTO `tanda`"
                 + "(`ID_TANDA`, `ID_ADMIN`, `MONTO`) VALUES "
@@ -33,6 +34,7 @@ public interface TandaDAO {
             generatedKeys.first();
             
             tanda.setIdTanda(generatedKeys.getInt(1));
+            stmt.close();
             
         }catch(SQLException sqlEx){
             System.out.println("ERROR " + sqlEx.getErrorCode());
@@ -46,13 +48,14 @@ public interface TandaDAO {
         return getTanda(tanda.getIdTanda(), conx);
     }
     
-    static void deleteTanda(int id, Connection conx){
+    public static boolean deleteTanda(int id, Connection conx){
         
         String query = "DELETE FROM `tanda` WHERE `tanda`.`ID_TANDA` = \'" + id + "\'";
         
         try{
             Statement stmt = conx.createStatement();
             stmt.executeUpdate(query);
+            stmt.close();
             
         }catch(SQLException sqlEx){
             System.out.println("ERROR " + sqlEx.getErrorCode());
@@ -64,9 +67,11 @@ public interface TandaDAO {
             System.out.println(nullEx.getMessage());
             
         }
+        
+        return (getTanda(id, conx) == null);
     }
     
-    static Tanda updateTanda(int original, Tanda updated, Connection conx){
+    public static Tanda updateTanda(int original, Tanda updated, Connection conx){
         
         String query = "UPDATE `tanda` SET "
                 + "`ID_TANDA`=\'" + updated.getIdTanda()+ "\', "
@@ -77,6 +82,7 @@ public interface TandaDAO {
         try{
             Statement stmt = conx.createStatement();
             stmt.executeUpdate(query);
+            stmt.close();
             
         }catch(SQLException sqlEx){
             System.out.println("ERROR " + sqlEx.getErrorCode());
@@ -92,7 +98,7 @@ public interface TandaDAO {
         return getTanda(updated.getIdTanda(), conx);
     }
     
-    static Tanda getTanda(int id, Connection conx){
+    public static Tanda getTanda(int id, Connection conx){
         Tanda tanda = null;
         
         String query = "SELECT * FROM `tanda` WHERE `ID_TANDA` = " + id;
@@ -107,6 +113,8 @@ public interface TandaDAO {
                                 result.getString("ID_ADMIN"),
                                 result.getLong("MONTO")
                     );
+            stmt.close();
+            
         }catch (SQLException sqlEx) {
             System.out.println("SELECT ERROR SQL: " + sqlEx.getErrorCode());
             System.out.println(sqlEx.getMessage());
@@ -116,6 +124,37 @@ public interface TandaDAO {
         }
         
         return tanda;
+    }
+    
+    public static Vector<Tanda> getAllTanda(String curp, Connection conx){
+        Vector<Tanda> allTandas = new Vector<Tanda>();
+        
+        String query = "SELECT * FROM `tanda` WHERE `ID_ADMIN` = \'" + curp + "\'";
+        
+        try{
+            Statement stmt = conx.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+            
+            while(result.next()){
+                Tanda tanda = new Tanda (
+                                            result.getInt("ID_TANDA"),
+                                            result.getString("ID_ADMIN"),
+                                            result.getLong("MONTO")
+                                         );
+                allTandas.add(tanda);
+            }
+            stmt.close();
+            
+        }catch (SQLException sqlEx) {
+            System.out.println("SELECT ERROR SQL: " + sqlEx.getErrorCode());
+            System.out.println(sqlEx.getMessage());
+            
+        }catch (NullPointerException nullEx){
+            System.out.println("ERROR: tandas inexistente, id inválido o conexión nula:\n" + nullEx.getMessage());
+            System.out.println(nullEx.getCause());
+        }
+        
+        return allTandas;
     }
     
 }

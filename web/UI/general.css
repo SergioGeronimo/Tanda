@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/02/2019, 10:25:59 PM
+    Author     : Sergio Gerónimo
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Lobster|Quicksand:400,700');
+
+/*
+#64bc9c green background
+#ffffff white :v
+#89f657 accent
+#f5f657 warning
+#f97b6b error
+
+*/
+
+*{
+    font-family: 'Quicksand', sans-serif;
+}
+
+body{
+    background: #64bc9c;
+    color: white;
+}
+
+h1, h2, h3{
+    font-family: 'Lobster', cursive;
+}

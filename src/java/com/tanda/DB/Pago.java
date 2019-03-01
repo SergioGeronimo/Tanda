@@ -30,7 +30,7 @@ public class Pago {
         this.pagado = pagado;
     }
 
-    public int getPago() {
+    public int getId() {
         return pago;
     }
 
@@ -68,6 +68,10 @@ public class Pago {
 
     public boolean isPagado() {
         return pagado;
+    }
+    
+    public int isPagadoSQL(){
+        return (isPagado() ? 1 : 0);
     }
 
     public void setPagado(boolean pagado) {

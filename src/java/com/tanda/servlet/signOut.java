@@ -3,26 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.tanda.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.tanda.DAO.*;
-import com.tanda.DB.*;
-
-import java.sql.Connection;
-import java.util.Vector;
 /**
  *
- * @author Sergio M. Gerónimo González
+ * @author Sergio Gerónimo
  */
-@WebServlet(name = "prueba", urlPatterns = {"/prueba"})
-public class Prueba extends HttpServlet {
+public class signOut extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,21 +31,10 @@ public class Prueba extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        Connection conx = JConnector.conectDB();
-        Pago pago = new Pago(3, "ANNYON", "2000-02-20", 22, false);
+        HttpSession session = request.getSession(false);
+        session.invalidate();
         
-        
-        
-        if(conx != null){
-            
-           Vector<Pago> allPagos = PagoDAO.getAllPagos(22, conx);
-           
-            
-            request.setAttribute("pago", allPagos);
-        }
-        
-        
-        request.getRequestDispatcher("/prueba.jsp").forward(request, response);
+        request.getRequestDispatcher("logIn.jsp").forward(request, response);
         
     }
 

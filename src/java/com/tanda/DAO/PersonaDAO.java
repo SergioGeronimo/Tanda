@@ -21,7 +21,7 @@ public interface PersonaDAO {
     
     
     
-    static Persona createPersona(Persona persona, Connection conx){
+    public static Persona createPersona(Persona persona, Connection conx){
         
         
         if(conx != null){
@@ -35,6 +35,7 @@ public interface PersonaDAO {
             try{
                 Statement stmt = conx.createStatement();
                 stmt.executeUpdate(query);
+                stmt.close();
                 
             }catch(SQLException sqlEx){
                 System.out.println("ERROR " + sqlEx.getErrorCode());
@@ -46,22 +47,25 @@ public interface PersonaDAO {
         return getPersona(persona.getCurp(), conx);
     }
     
-    static void deletePersona(String curp, Connection conx){
+    public static boolean deletePersona(String curp, Connection conx){
         if(conx != null){
             
             String query = "DELETE FROM `persona` WHERE `persona`.`CURP` = \'"+curp+"\'";
             try{
                 Statement stmt = conx.createStatement();
                 stmt.executeUpdate(query);
+                stmt.close();
+                
             }catch(SQLException sqlEx){
                 System.out.println("ERROR " + sqlEx.getErrorCode());
                 System.out.println(sqlEx.getMessage());
             }
             
         }
+        return (getPersona(curp, conx) == null);
     }
     
-    static Persona updatePersona(String originalCurp, Persona update, Connection conx){
+    public static Persona updatePersona(String originalCurp, Persona update, Connection conx){
         
         String query = "UPDATE `persona` SET"
                 + "`CURP` = \'" + update.getCurp() + "\',"
@@ -73,6 +77,8 @@ public interface PersonaDAO {
         try{
             Statement stmt = conx.createStatement();
             stmt.executeUpdate(query);
+            stmt.close();
+            
         }catch(SQLException sqlEx){
             System.out.println("ERROR " + sqlEx.getErrorCode());
             System.out.println(sqlEx.getMessage());
@@ -81,7 +87,7 @@ public interface PersonaDAO {
         return getPersona(update.getCurp(), conx);
     }
     
-    static Persona getPersona(String curp, Connection conx){
+    public static Persona getPersona(String curp, Connection conx){
         
         Persona persona = null;
         

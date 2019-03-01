@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>signUp</servlet-name>
+        <servlet-class>com.tanda.servlet.signUp</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logIn</servlet-name>
+        <servlet-class>com.tanda.servlet.logIn</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>signOut</servlet-name>
+        <servlet-class>com.tanda.servlet.signOut</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>signUp</servlet-name>
+        <url-pattern>/signUp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logIn</servlet-name>
+        <url-pattern>/logIn</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>signOut</servlet-name>
+        <url-pattern>/signOut</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>tandas</servlet-name>
+        <url-pattern>/tandas</url-pattern>
+    </servlet-mapping>
+    
+    <session-config>
+        <session-timeout>
+            0
+        </session-timeout>
+    </session-config>
+    
+    
+</web-app>

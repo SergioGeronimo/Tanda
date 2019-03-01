@@ -13,7 +13,7 @@ import java.sql.Statement;
 
 
 public interface UsuarioDAO {
-    static Usuario createUsuario(Usuario user, Connection conx){
+    public static Usuario createUsuario(Usuario user, Connection conx){
         
         String query = "INSERT INTO `usuario`"
                 + "(`ID_USUARIO`, `ID_PERSONA`, `PASSWORD`) VALUES"
@@ -30,7 +30,7 @@ public interface UsuarioDAO {
             generatedKeys.first();           
             
             user.setId(generatedKeys.getInt(1));
-            
+            stmt.close();
             
         }catch(SQLException sqlEx){
             System.out.println("ERROR " + sqlEx.getErrorCode());
@@ -41,16 +41,19 @@ public interface UsuarioDAO {
             System.out.println(nullEx.getMessage());
         }
         
-        return getUsuario(user.getId(), conx);
+        return getUsuario(user.getId(), user.getPassword(), conx);
     }
     
-    static void deleteUsuario(int id, Connection conx){
+    public static boolean deleteUsuario(int id, String password, Connection conx){
         
-        String query = "DELETE FROM `usuario` WHERE `usuario`.`ID_USUARIO` = \'"+id+"\'";
+        String query = "DELETE FROM `usuario` WHERE "
+                + "`usuario`.`ID_USUARIO` = \'"+id+"\' AND"
+                + "`usuario`.`PASSWORD` = \'" + password + "\'";
         
             try{
                 Statement stmt = conx.createStatement();
                 stmt.executeUpdate(query);
+                stmt.close();
                 
             }catch(SQLException sqlEx){
                 System.out.println("ERROR " + sqlEx.getErrorCode());
@@ -60,9 +63,11 @@ public interface UsuarioDAO {
                 System.out.println("ERROR: NullPointerException on UsuarioDAO by deleteUsuario");
                 System.out.println(nullEx.getMessage());
             }
+            
+        return (getUsuario(id, password, conx) == null);
     }
     
-    static Usuario updateUsuario(int original, Usuario updated, Connection conx){
+    public static Usuario updateUsuario(int original, Usuario updated, Connection conx){
         String query = "UPDATE `usuario` SET "
                 + "`ID_USUARIO` = \'" + updated.getId() + "\',"
                 + "`ID_PERSONA` = \'" + updated.getCurp() + "\',"
@@ -72,6 +77,8 @@ public interface UsuarioDAO {
         try{
             Statement stmt = conx.createStatement();
             stmt.executeUpdate(query);
+            stmt.close();
+            
         }catch(SQLException sqlEx){
             System.out.println("ERROR " + sqlEx.getErrorCode());
             System.out.println(sqlEx.getMessage());
@@ -81,13 +88,14 @@ public interface UsuarioDAO {
             System.out.println(nullEx.getMessage());
         }
         
-        return getUsuario(updated.getId(), conx);
+        return getUsuario(updated.getId(), updated.getPassword(), conx);
         
     }
     
-    static Usuario getUsuario(int id, Connection conx){
+    public static Usuario getUsuario(int id, String password, Connection conx){
         Usuario user = null;
-        String query = "SELECT * FROM `usuario` WHERE `ID_USUARIO` = " + id;
+        String query = "SELECT * FROM `usuario` WHERE "
+                + "`ID_USUARIO`= " + id + " AND `PASSWORD` = \'" + password + "\'";
         
         try{
             Statement stmt = conx.createStatement();
@@ -98,6 +106,7 @@ public interface UsuarioDAO {
                                 result.getString("ID_PERSONA"),
                                 result.getString("PASSWORD")
                                 );
+            stmt.close();
             
         } catch (SQLException sqlEx) {
             System.out.println("ERROR " + sqlEx.getErrorCode());

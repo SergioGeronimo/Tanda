@@ -3,26 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.tanda.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tanda.DAO.*;
-import com.tanda.DB.*;
-
+import com.tanda.DAO.JConnector;
+import com.tanda.DAO.PersonaDAO;
+import com.tanda.DAO.UsuarioDAO;
+import com.tanda.DB.Persona;
+import com.tanda.DB.Usuario;
 import java.sql.Connection;
-import java.util.Vector;
+import javax.servlet.http.HttpSession;
+
 /**
  *
- * @author Sergio M. Gerónimo González
+ * @author Sergio Gerónimo
  */
-@WebServlet(name = "prueba", urlPatterns = {"/prueba"})
-public class Prueba extends HttpServlet {
+public class signUp extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,21 +38,36 @@ public class Prueba extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        Connection conx = JConnector.conectDB();
-        Pago pago = new Pago(3, "ANNYON", "2000-02-20", 22, false);
-        
-        
-        
-        if(conx != null){
+        try{
             
-           Vector<Pago> allPagos = PagoDAO.getAllPagos(22, conx);
-           
+            Persona person = new Persona(
+                    request.getParameter("CURP"),
+                    request.getParameter("NOMBRE"),
+                    request.getParameter("DIRECCION"),
+                    Long.valueOf(request.getParameter("TELEFONO"))
+            );
             
-            request.setAttribute("pago", allPagos);
+            Usuario user = new Usuario(
+                    0,
+                    request.getParameter("CURP"),
+                    request.getParameter("PASSWORD")
+            );
+            
+            Connection conx = JConnector.conectDB();
+            
+            person = PersonaDAO.createPersona(person, conx);
+            user = UsuarioDAO.createUsuario(user, conx);
+            
+            HttpSession session = request.getSession(true);
+            session.setAttribute("usuario", user);
+            
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            
+        }catch(NullPointerException nullEx){
+            
+            System.out.println(nullEx.getMessage());
+            
         }
-        
-        
-        request.getRequestDispatcher("/prueba.jsp").forward(request, response);
         
     }
 
