@@ -11,13 +11,14 @@ package com.tanda.DB;
  */
 public class Persona {
     
-    String curp;
-    String nombre, direccion;
-    long telefono;
+    private String curp;
+    private String nombre, apellido, direccion;
+    private long telefono;
 
-    public Persona(String curp, String nombre, String direccion, long telefono) {
+    public Persona(String curp, String nombre, String apellido, String direccion, long telefono) {
         this.curp = curp;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.direccion = direccion;
         this.telefono = telefono;
     }
@@ -38,6 +39,14 @@ public class Persona {
         this.nombre = nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -54,6 +63,5 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    
     
 }

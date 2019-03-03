@@ -12,6 +12,10 @@
         <servlet-name>signOut</servlet-name>
         <servlet-class>com.tanda.servlet.signOut</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>prueba</servlet-name>
+        <servlet-class>prueba</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>signUp</servlet-name>
         <url-pattern>/signUp</url-pattern>
@@ -26,8 +30,8 @@
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>tandas</servlet-name>
-        <url-pattern>/tandas</url-pattern>
+        <servlet-name>prueba</servlet-name>
+        <url-pattern>/prueba</url-pattern>
     </servlet-mapping>
     
     <session-config>
@@ -35,6 +39,4 @@
             0
         </session-timeout>
     </session-config>
-    
-    
 </web-app>

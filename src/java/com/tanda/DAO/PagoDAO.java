@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.Vector;
 
 /**
@@ -22,12 +21,13 @@ public interface PagoDAO {
     public static Pago createPago(Pago pago, Connection conx){
         
         String query = "INSERT INTO `pago`"
-                + "(`ID_PAGO`, `ID_PERSONA`, `FECHA`, `ID_TANDA`, `PAGADO`) VALUES "
+                + "(`ID_PAGO`, `ID_PERSONA`, `FECHA`, `ID_TANDA`, `PAGADO`, `ACEPTADO`) VALUES "
                 + "(NULL, "
                 + "\'" + pago.getCURP() +  "\', "
                 + "\'" + pago.getFecha().toString() + "\', "
                 + "\'" + pago.getIdTanda() + "\', "
-                + "\'" + pago.isPagadoSQL() + "\');";
+                + "\'NULL\', "
+                + "\'NULL\');";
         
         try{
             Statement stmt = conx.createStatement();
@@ -81,7 +81,8 @@ public interface PagoDAO {
                 + "`ID_PERSONA` = \'" + updated.getCURP() + "\', "
                 + "`FECHA` = \'" + updated.getFecha().toString() +"\', "
                 + "`ID_TANDA` = \'" + updated.getIdTanda() + "\', "
-                + "`PAGADO` = \'" + updated.isPagadoSQL() + "\' "
+                + "`PAGADO` = \'" + updated.isPagadoSQL() + "\', "
+                + "`ACEPTADO` = \'" + updated.isAceptado() + "\' "
                 + "WHERE `pago`.`ID_PAGO` = \'" + original + "\'";
         try{
             Statement stmt = conx.createStatement();
@@ -116,7 +117,8 @@ public interface PagoDAO {
                             result.getString("ID_PERSONA"),
                             result.getDate("FECHA"),
                             result.getInt("ID_TANDA"),
-                            result.getBoolean("PAGADO")
+                            result.getBoolean("PAGADO"),
+                            result.getBoolean("ACEPTADO")
                             );
             stmt.close();
         }catch (SQLException sqlEx) {
@@ -150,7 +152,8 @@ public interface PagoDAO {
                                 result.getString("ID_PERSONA"),
                                 result.getDate("FECHA"),
                                 result.getInt("ID_TANDA"),
-                                result.getBoolean("PAGADO")
+                                result.getBoolean("PAGADO"),
+                                result.getBoolean("ACEPTADO")
                                 );
                 allPagos.add(pago);
                 

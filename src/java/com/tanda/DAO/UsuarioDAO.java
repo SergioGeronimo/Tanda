@@ -16,10 +16,11 @@ public interface UsuarioDAO {
     public static Usuario createUsuario(Usuario user, Connection conx){
         
         String query = "INSERT INTO `usuario`"
-                + "(`ID_USUARIO`, `ID_PERSONA`, `PASSWORD`) VALUES"
+                + "(`ID_USUARIO`, `ID_PERSONA`, `PASSWORD`, `ADMIN`) VALUES"
                 + "( NULL,"
                 + "\'" + user.getCurp() + "\',"
-                + "\'" + user.getPassword() + "\');";
+                + "\'" + user.getPassword() + "\',"
+                + "\'" + user.isAdminSQL() + "\');";
         
         try{
             Statement stmt = conx.createStatement();
@@ -71,7 +72,8 @@ public interface UsuarioDAO {
         String query = "UPDATE `usuario` SET "
                 + "`ID_USUARIO` = \'" + updated.getId() + "\',"
                 + "`ID_PERSONA` = \'" + updated.getCurp() + "\',"
-                + "`PASSWORD` = \'" + updated.getPassword() + "\'"
+                + "`PASSWORD` = \'" + updated.getPassword() + "\',"
+                + "`ADMIN` = \'" + updated.isAdminSQL() + "\'"
                 + "WHERE `usuario`.`ID_USUARIO` = \'" + original + "\'";
         
         try{
@@ -104,7 +106,8 @@ public interface UsuarioDAO {
             user = new Usuario(
                                 result.getInt("ID_USUARIO"),
                                 result.getString("ID_PERSONA"),
-                                result.getString("PASSWORD")
+                                result.getString("PASSWORD"),
+                                result.getBoolean("ADMIN")
                                 );
             stmt.close();
             

@@ -9,14 +9,26 @@ public class Usuario {
     private int id;
     private String curp;
     private String password;
+    private boolean admin;
 
-    public Usuario(int id, String curp, String password) {
+    public Usuario(int id, String curp, String password, boolean admin) {
         this.id = id;
         this.curp = curp;
         this.password = password;
+        this.admin = admin;
     }
-    
-    
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public int isAdminSQL() {
+        return (admin? 1:0);
+    }
 
     public int getId() {
         return id;

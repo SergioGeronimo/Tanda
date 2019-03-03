@@ -21,10 +21,11 @@ public interface TandaDAO {
     public static Tanda createTanda(Tanda tanda, Connection conx){
         
         String query = "INSERT INTO `tanda`"
-                + "(`ID_TANDA`, `ID_ADMIN`, `MONTO`) VALUES "
+                + "(`ID_TANDA`, `ID_ADMIN`, `MONTO`, `ENTREGADA`) VALUES "
                 + "(NULL, "
                 + "\'" + tanda.getCURP() + "\',"
-                + "\'" + tanda.getMonto() + "\');";
+                + "\'" + tanda.getMonto() + "\',"
+                + "NULL);";
         
         try{
             Statement stmt = conx.createStatement();
@@ -76,7 +77,8 @@ public interface TandaDAO {
         String query = "UPDATE `tanda` SET "
                 + "`ID_TANDA`=\'" + updated.getIdTanda()+ "\', "
                 + "`ID_ADMIN`=\'" + updated.getCURP() + "\', "
-                + "`MONTO`=\'" + updated.getMonto() + "\' "
+                + "`MONTO`=\'" + updated.getMonto() + "\', "
+                + "`ENTREGADA`=\'" + updated.isEntregadaSQL() + "\'"
                 + "WHERE `tanda`.`ID_TANDA` = \'" + original + "\' ";
         
         try{
@@ -111,7 +113,8 @@ public interface TandaDAO {
             tanda = new Tanda(
                                 result.getInt("ID_TANDA"),
                                 result.getString("ID_ADMIN"),
-                                result.getLong("MONTO")
+                                result.getLong("MONTO"),
+                                result.getBoolean("ENTREGADA")
                     );
             stmt.close();
             
@@ -139,7 +142,8 @@ public interface TandaDAO {
                 Tanda tanda = new Tanda (
                                             result.getInt("ID_TANDA"),
                                             result.getString("ID_ADMIN"),
-                                            result.getLong("MONTO")
+                                            result.getLong("MONTO"),
+                                            result.getBoolean("ENTREGADA")
                                          );
                 allTandas.add(tanda);
             }

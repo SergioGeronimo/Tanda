@@ -27,9 +27,10 @@ public interface PersonaDAO {
         if(conx != null){
             
             String query = "INSERT INTO `persona`"
-                    + "(`CURP`, `NOMBRE`, `DIRECCION`, `TELEFONO`) VALUES"
+                    + "(`CURP`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `TELEFONO`) VALUES"
                     + "(\'" + persona.getCurp() + "\',"
                     + "\'" + persona.getNombre() + "\',"
+                    + "\'" + persona.getApellido() + "\',"
                     + "\'" + persona.getDireccion() + "\',"
                     + "\'" + persona.getTelefono() + "\');";
             try{
@@ -70,6 +71,7 @@ public interface PersonaDAO {
         String query = "UPDATE `persona` SET"
                 + "`CURP` = \'" + update.getCurp() + "\',"
                 + "`NOMBRE` = \'" + update.getNombre() + "\',"
+                + "`APELLIDO` = \'" + update.getApellido() + "\',"
                 + "`DIRECCION` = \'" + update.getDireccion() + "\',"
                 + "`TELEFONO` = \'" + update.getTelefono() + "\'"
                 + "WHERE `persona`.`CURP` = \'" + originalCurp + "\'";
@@ -101,6 +103,7 @@ public interface PersonaDAO {
                 
                 persona = new Persona(  resultado.getString("CURP"),
                                         resultado.getString("NOMBRE"),
+                                        resultado.getString("APELLIDO"),
                                         resultado.getString("DIRECCION"),
                                         resultado.getLong("TELEFONO"));
                 stmt.close();

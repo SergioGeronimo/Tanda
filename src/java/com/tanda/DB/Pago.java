@@ -12,22 +12,28 @@ public class Pago {
     private String CURP;
     private Date fecha;
     private int idTanda;
-    boolean pagado;
+    private boolean pagado;
+    private boolean aceptado;
 
-    public Pago(int pago, String CURP, Date fecha, int idTanda, boolean pagado) {
+    public Pago(int pago, String CURP, Date fecha, int idTanda, boolean pagado, boolean aceptado) {
         this.pago = pago;
         this.CURP = CURP;
         this.fecha = fecha;
         this.idTanda = idTanda;
         this.pagado = pagado;
+        this.aceptado = aceptado;
+    }
+
+    public boolean isAceptado() {
+        return aceptado;
     }
     
-    public Pago(int pago, String CURP, String fecha, int idTanda, boolean pagado) {
-        this.pago = pago;
-        this.CURP = CURP;
-        this.fecha = Date.valueOf(fecha);
-        this.idTanda = idTanda;
-        this.pagado = pagado;
+    public int isAceptadoSQL(){
+        return (this.aceptado ? 1 : 0);
+    }
+
+    public void setAceptado(boolean aceptado) {
+        this.aceptado = aceptado;
     }
 
     public int getId() {
