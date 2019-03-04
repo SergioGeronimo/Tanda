@@ -9,21 +9,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Sign up here!</title>
     </head>
     <body>
-        <h1>New user!</h1>
+        <h1>Hello new user!</h1>
         <form method="POST" action="signUp">
             
-            <input type="text" placeholder="CURP" maxlength="18" name="CURP">
-            <input type="text" placeholder="Name" maxlength="255" name="NOMBRE">
-            <input type="text" placeholder="Addres" maxlength="255" name="DIRECCION">
-            <input type="text" placeholder="Phone number" maxlength="10" name="TELEFONO">
-            <input type="password" placeholder="Password" maxlength="15" name="PASSWORD">
+            <input type="text" placeholder="CURP" maxlength="18" name="CURP" required>
+            <input type="text" placeholder="Your name" maxlength="255" name="NOMBRE" required>
+            <input type="text" placeholder="Your last name" maxlength="255" name="APELLIDO" required>
+            <input type="text" placeholder="Addres" maxlength="255" name="DIRECCION" required>
+            <input type="text" placeholder="Phone number" maxlength="10" name="TELEFONO" required>
+            <input type="password" placeholder="Password" minlength="4" maxlength="15" name="PASSWORD" required>
+            
+            Do you want to be a TandApp Administrator?
+            <input  type="radio" name="ADMIN" value="true"> Yes please
+            <input  type="radio" name="ADMIN" value="false"> No, thanks
             
             <input type="submit">
             
         </form>
-        <a href="logIn.jsp">Already a user? Log in here</a>
+        <a href="//logIn.jsp">Already a user? Log in here</a>
     </body>
 </html>

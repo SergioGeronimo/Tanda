@@ -8,11 +8,11 @@ and open the template in the editor.
     Author     : Sergio Gerónimo
 */
 
-@import url('https://fonts.googleapis.com/css?family=Lobster|Quicksand:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lobster|Open+Sans:400,700');
 
 /*
 #64bc9c green background
-#ffffff white :v
+#ffffff white
 #89f657 accent
 #f5f657 warning
 #f97b6b error
@@ -20,7 +20,7 @@ and open the template in the editor.
 */
 
 *{
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 body{

@@ -43,14 +43,17 @@ public class signUp extends HttpServlet {
             Persona person = new Persona(
                     request.getParameter("CURP"),
                     request.getParameter("NOMBRE"),
+                    request.getParameter("APELLIDO"),
                     request.getParameter("DIRECCION"),
+                    
                     Long.valueOf(request.getParameter("TELEFONO"))
             );
             
             Usuario user = new Usuario(
                     0,
                     request.getParameter("CURP"),
-                    request.getParameter("PASSWORD")
+                    request.getParameter("PASSWORD"),
+                    Boolean.valueOf(request.getParameter("ADMIN"))
             );
             
             Connection conx = JConnector.conectDB();
@@ -61,7 +64,7 @@ public class signUp extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("usuario", user);
             
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/user").forward(request, response);
             
         }catch(NullPointerException nullEx){
             

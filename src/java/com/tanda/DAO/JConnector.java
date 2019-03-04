@@ -22,7 +22,7 @@ public interface JConnector {
     
     public static Connection conectDB() {
         try{
-            System.out.println("Iniciando JDBC...");
+            
             Class.forName("com.mysql.jdbc.Driver");
             
             Properties info = new Properties();

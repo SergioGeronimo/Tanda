@@ -6,7 +6,9 @@
 package com.tanda.servlet;
 
 import com.tanda.DAO.JConnector;
+import com.tanda.DAO.PersonaDAO;
 import com.tanda.DAO.UsuarioDAO;
+import com.tanda.DB.Persona;
 import com.tanda.DB.Usuario;
 import java.io.IOException;
 import java.sql.Connection;
@@ -43,7 +45,13 @@ public class logIn extends HttpServlet {
                     conx);
             
             HttpSession session = request.getSession(true);
+            
+            user.setPassword(null);
+            Persona persona = PersonaDAO.getPersona(user.getCurp(), conx);
+            
             session.setAttribute("usuario", user);
+            session.setAttribute("persona", persona);
+            
             
         }catch(NullPointerException nullEx){
             

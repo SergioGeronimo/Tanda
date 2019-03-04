@@ -10,7 +10,7 @@
     <head>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="/Tanda/UI/general.css">
+        <link rel="stylesheet" href="/TandApp/UI/general.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <title>Log in please</title>
         
@@ -18,12 +18,15 @@
     
     <body>
         
+        <h1 class="title">Hello user! Log into your account</h1>
+        
         <form method="POST" action="logIn">
-            <h1 class="title">Hello user! Log into your account</h1>
+            
             <input type="text" placeholder="User ID" name="ID_USUARIO">
             <input type="password" placeholder="Password" name="PASSWORD">
             <input type="submit">
         </form> 
-        <a href="signUp.jsp" class="suggestion">Not a user? Sign up here :)</a>
+        
+        <a href="/signUp.jsp" class="suggestion">Not a user? Sign up here :)</a>
     </body>
 </html>

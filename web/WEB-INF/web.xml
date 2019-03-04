@@ -16,6 +16,14 @@
         <servlet-name>prueba</servlet-name>
         <servlet-class>prueba</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserInfo</servlet-name>
+        <servlet-class>com.tanda.servlet.UserInfo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditUserInfo</servlet-name>
+        <servlet-class>com.tanda.servlet.EditUserInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>signUp</servlet-name>
         <url-pattern>/signUp</url-pattern>
@@ -28,12 +36,18 @@
         <servlet-name>signOut</servlet-name>
         <url-pattern>/signOut</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>prueba</servlet-name>
         <url-pattern>/prueba</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>UserInfo</servlet-name>
+        <url-pattern>/view/user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditUserInfo</servlet-name>
+        <url-pattern>/edit/user</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             0
