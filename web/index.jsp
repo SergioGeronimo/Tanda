@@ -80,7 +80,7 @@
                 View my information
             </button>
             
-            <form action="signOut">
+            <form action="/TandApp/signOut">
                 <input type="submit" value="Log out">
             </form>
             

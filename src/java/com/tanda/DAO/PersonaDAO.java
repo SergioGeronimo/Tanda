@@ -111,6 +111,7 @@ public interface PersonaDAO {
                 return persona;
                 
             } catch (SQLException ex) {
+                System.out.println("getPersona - ERROR: "+ ex.getErrorCode());
                 System.out.println(ex.getMessage());
                 return null;
             }catch (NullPointerException nullex){

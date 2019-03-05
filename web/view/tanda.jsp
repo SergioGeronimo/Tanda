@@ -15,10 +15,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Tandas</title>
+        <title>TandApp - Your tandas</title>
     </head>
     <body>
-        <h1>Estas son las tandas actuales con sus respectivos usuarios</h1>
+        <h1>All tandas</h1>
         <% for (int i = 0; i < allTandas.size(); i++){ %>
         
         <h2><%= allTandas.elementAt(i).getMonto()%></h2>

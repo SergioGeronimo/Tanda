@@ -39,53 +39,62 @@
         </div>
         
         <div>
-            <table>
-                <tr>
-                    <td>User ID:</td>
-                    <td><input type="text" value="<%= user.getId() %>" disabled></td>
-                </tr>
-                <tr>
-                    <td>CURP:</td>
-                    <td><input type="text" value="<%= persona.getCurp() %>" disabled></td>
-                </tr>
-                <tr>
-                    <td>Name:</td>
-                    <td><input type="text" value="<%= persona.getNombre() %>" disabled></td>
-                </tr>
-                <tr>
-                    <td>Last Name:</td>
-                    <td><input type="text" value="<%= persona.getApellido() %>" disabled></td>
-                </tr>
-                <tr>
-                    <td>Address:</td>
-                    <td><input type="text" value="<%= persona.getDireccion() %>" disabled></td>
-                </tr>
-                <tr>
-                    <td>Phone number:</td>
-                    <td><input type="text" value="<%= persona.getTelefono() %>" disabled></td>
-                </tr>
-                <tr>
-                    <td>Administrator:</td>
-                    <td>
-                    <% if (user.isAdmin()){ %>
-                        
-                        <i class="material-icons">check_circle</i>
+            <form method="POST" action="/TandApp/edit/user">
+                <table id="tableInput">
+                    <tr>
+                        <td>User ID:</td>
+                        <td><input type="text" value="<%= user.getId() %>" name="ID_USUARIO"></td>
+                    </tr>
+                    <tr>
+                        <td>CURP:</td>
+                        <td><input type="text" value="<%= persona.getCurp() %>" name="CURP"></td>
+                    </tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td><input type="text" value="<%= persona.getNombre() %>" name="NOMBRE"></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td><input type="text" value="<%= persona.getApellido() %>" name="APELLIDO"></td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td><input type="text" value="<%= persona.getDireccion() %>" name="DIRECCION"></td>
+                    </tr>
+                    <tr>
+                        <td>Phone number:</td>
+                        <td><input type="text" value="<%= persona.getTelefono() %>" name="TELEFONO"></td>
+                    </tr>
+                    <tr>
+                        <td>Administrator:</td>
+                        <td>
+                        <% if (user.isAdmin()){ %>
 
-                    <% }else{  %>
+                            <i class="material-icons">check_circle</i>
 
-                        <i class="material-icons">cancel</i>
+                        <% }else{  %>
 
-                    <% } %>
-                    </td>
-                </tr>
-                
-            </table>
+                            <i class="material-icons">cancel</i>
+
+                        <% } %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Confirm password:</td>
+                        <td><input type="password" name="PASSWORD"></td>
+                    </tr>
+
+                </table>
+                        <input type="submit">
+            </form>
             
-            <button onclick="toEditUserInfo()">
+            <!--<button onclick="toEditUserInfo()">
                 <i class="material-icons">edit</i>
                 Edit my information
-            </button>
+            </button>-->
             
+            
+             
         </div>
         
     </body>
