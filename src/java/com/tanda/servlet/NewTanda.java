@@ -5,25 +5,27 @@
  */
 package com.tanda.servlet;
 
+import com.tanda.DAO.JConnector;
+import com.tanda.DAO.PagoDAO;
+import com.tanda.DAO.TandaDAO;
+import com.tanda.DB.Pago;
+import com.tanda.DB.Tanda;
+import com.tanda.DB.Usuario;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.tanda.DAO.JConnector;
-import com.tanda.DAO.PersonaDAO;
-import com.tanda.DAO.UsuarioDAO;
-import com.tanda.DB.Persona;
-import com.tanda.DB.Usuario;
-import java.sql.Connection;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Jahaziel A. Sanchez Moreno
  */
-public class signUp extends HttpServlet {
+public class NewTanda extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,42 +40,45 @@ public class signUp extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        int index = 0;
+        Vector<Pago> pagos = new Vector<Pago>();
+        
+        HttpSession session = request.getSession(false);
+        Tanda tanda = null;
+        Connection conx = JConnector.conectDB();
+        
         try{
-            
-            Persona person = new Persona(
-                    request.getParameter("CURP"),
-                    request.getParameter("NOMBRE"),
-                    request.getParameter("APELLIDO"),
-                    request.getParameter("DIRECCION"),
-                    
-                    Long.valueOf(request.getParameter("TELEFONO"))
-            );
-            
-            Usuario user = new Usuario(
+            Usuario usuario = (Usuario)session.getAttribute("usuario");
+            tanda = new Tanda(
                     0,
-                    request.getParameter("CURP"),
-                    request.getParameter("PASSWORD"),
-                    Boolean.valueOf(request.getParameter("ADMIN"))
-            );
+                    usuario.getCurp(),
+                    Long.valueOf(request.getParameter("MONTO")),
+                    false);
             
-            Connection conx = JConnector.conectDB();
+            tanda = TandaDAO.createTanda(tanda, conx);
             
-            Persona persona = PersonaDAO.createPersona(person, conx);
-            user = UsuarioDAO.createUsuario(user, conx);
+            String check = request.getParameter("CURP"+index);
+            while(check != null){
+                System.out.println("On CURP"+index);
+                Pago pago = new Pago(
+                            0,
+                            request.getParameter("CURP"+index),
+                            Date.valueOf(request.getParameter("DATE"+index)),
+                            tanda.getIdTanda(),
+                            false,
+                            false);
+                
+                PagoDAO.createPago(pago, conx);
+                pagos.add(pago);
+                index++;
+                check = request.getParameter("CURP"+index);
+            }
             
-            
-            HttpSession session = request.getSession(true);
-            session.setAttribute("usuario", user);
-            session.setAttribute("persona", persona);
-            
-            
-            
-        }catch(NullPointerException nullEx){
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-            System.out.println(nullEx.getMessage());
-            
+            request.getRequestDispatcher("/view/tandas").forward(request, response);
+        }catch(NullPointerException | NumberFormatException nullEx){
+            request.getRequestDispatcher("/new/tanda.jsp").forward(request, response);
+            nullEx.printStackTrace();
         }
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
         
     }
 

@@ -56,6 +56,7 @@ public class logIn extends HttpServlet {
         }catch(NullPointerException nullEx){
             
              System.out.println(nullEx.getMessage());
+             request.getRequestDispatcher("/logIn.jsp").forward(request, response);
              
         }
         

@@ -24,6 +24,22 @@
         <servlet-name>EditUserInfo</servlet-name>
         <servlet-class>com.tanda.servlet.EditUserInfo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewTandas</servlet-name>
+        <servlet-class>com.tanda.servlet.ViewTandas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewPagos</servlet-name>
+        <servlet-class>com.tanda.servlet.ViewPagos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewTanda</servlet-name>
+        <servlet-class>com.tanda.servlet.NewTanda</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveTanda</servlet-name>
+        <servlet-class>com.tanda.servlet.RemoveTanda</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>signUp</servlet-name>
         <url-pattern>/signUp</url-pattern>
@@ -48,9 +64,25 @@
         <servlet-name>EditUserInfo</servlet-name>
         <url-pattern>/edit/user</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewTandas</servlet-name>
+        <url-pattern>/view/tandas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewPagos</servlet-name>
+        <url-pattern>/view/pagos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewTanda</servlet-name>
+        <url-pattern>/new/tanda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveTanda</servlet-name>
+        <url-pattern>/remove/tanda</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            0
+            30
         </session-timeout>
     </session-config>
 </web-app>

@@ -5,10 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    session.invalidate();
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="/TandApp/UI/general.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="/TandApp/jscript/buttons.js"></script>
         <title>Sign up here!</title>
     </head>
     <body>
@@ -29,6 +35,6 @@
             <input type="submit">
             
         </form>
-        <a href="//logIn.jsp">Already a user? Log in here</a>
+        <a href="/TandApp/logIn.jsp">Already a user? Log in here</a>
     </body>
 </html>

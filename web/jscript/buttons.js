@@ -37,6 +37,10 @@ function toTandas(){
     location.href = "/TandApp/view/tandas";
 }
 
+function toNewTanda(){
+    location.href = "/TandApp/new/tanda"
+}
+
 function createConfirmPssw(divName){
     var div = document.getElementById(divName);
     
@@ -46,4 +50,46 @@ function createConfirmPssw(divName){
     pssw.placeholder = "Password";
     pssw.required = true;
     div.appendChild(pssw);
+}
+
+function enableEditTanda(){
+    
+    
+    var form = document.getElementById("form");
+    form.action = "/TandApp/edit/tanda";
+    
+    var submitButton = document.getElementById("submit");
+    submitButton.innerHTML = "done";
+    
+    removeElement("editButton" );
+    
+    var index = 0;
+    while(document.getElementById("FECHA" + index ) !==  null){
+        
+        document.getElementById("FECHA" + index ).readonly = false ;
+        document.getElementById("ID_PERSONA" + index ).readonly = false ;
+        
+        removeElement("NOMBRE" + index);
+        removeElement("DIRECCION" + index);
+        removeElement("TELEFONO" + index);
+        removeElement("PAGADO" + index);
+        removeElement("ACEPTADO" + index);
+        
+        index++;
+    }
+    
+    document.getElementById("MONTO").readonly = false ;
+    
+    removeElement("ROUNDS");
+    removeElement("PAYMENTS");
+    removeElement("NOMBRE");
+    removeElement("DIRECCION" );
+    removeElement("TELEFONO");
+    removeElement("PAGADO");
+    removeElement("ACEPTADO");
+}
+
+function removeElement(elementId) {
+    var element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
 }

@@ -31,10 +31,14 @@ public class signOut extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession(false);
-        session.invalidate();
+        try{
+            HttpSession session = request.getSession(false);
+            session.invalidate();
+        }catch(NullPointerException nullEx){
+            nullEx.printStackTrace();
+        }
         
-        request.getRequestDispatcher("logIn.jsp").forward(request, response);
+        request.getRequestDispatcher("/logIn.jsp").forward(request, response);
         
     }
 

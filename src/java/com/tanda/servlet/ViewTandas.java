@@ -5,25 +5,24 @@
  */
 package com.tanda.servlet;
 
+import com.tanda.DAO.JConnector;
+import com.tanda.DAO.TandaDAO;
+import com.tanda.DB.Tanda;
+import com.tanda.DB.Usuario;
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.tanda.DAO.JConnector;
-import com.tanda.DAO.PersonaDAO;
-import com.tanda.DAO.UsuarioDAO;
-import com.tanda.DB.Persona;
-import com.tanda.DB.Usuario;
-import java.sql.Connection;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Jahaziel A. Sanchez Moreno
+ * @author Sergio Gerónimo
  */
-public class signUp extends HttpServlet {
+public class ViewTandas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,43 +37,21 @@ public class signUp extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        HttpSession session = request.getSession(false);
+        
         try{
-            
-            Persona person = new Persona(
-                    request.getParameter("CURP"),
-                    request.getParameter("NOMBRE"),
-                    request.getParameter("APELLIDO"),
-                    request.getParameter("DIRECCION"),
-                    
-                    Long.valueOf(request.getParameter("TELEFONO"))
-            );
-            
-            Usuario user = new Usuario(
-                    0,
-                    request.getParameter("CURP"),
-                    request.getParameter("PASSWORD"),
-                    Boolean.valueOf(request.getParameter("ADMIN"))
-            );
-            
             Connection conx = JConnector.conectDB();
-            
-            Persona persona = PersonaDAO.createPersona(person, conx);
-            user = UsuarioDAO.createUsuario(user, conx);
-            
-            
-            HttpSession session = request.getSession(true);
-            session.setAttribute("usuario", user);
-            session.setAttribute("persona", persona);
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            Vector<Tanda> allTandas = TandaDAO.getAllTanda(usuario.getCurp(), conx);
             
             
+            request.setAttribute("allTandas", allTandas);
             
         }catch(NullPointerException nullEx){
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-            System.out.println(nullEx.getMessage());
-            
+            nullEx.printStackTrace();
         }
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
         
+        request.getRequestDispatcher("/view/tanda.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

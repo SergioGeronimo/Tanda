@@ -5,25 +5,26 @@
  */
 package com.tanda.servlet;
 
+import com.tanda.DAO.JConnector;
+import com.tanda.DAO.PagoDAO;
+import com.tanda.DAO.TandaDAO;
+import com.tanda.DB.Pago;
+import com.tanda.DB.Persona;
+import com.tanda.DB.Tanda;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tanda.DAO.JConnector;
-import com.tanda.DAO.PersonaDAO;
-import com.tanda.DAO.UsuarioDAO;
-import com.tanda.DB.Persona;
-import com.tanda.DB.Usuario;
-import java.sql.Connection;
-import javax.servlet.http.HttpSession;
-
 /**
  *
- * @author Jahaziel A. Sanchez Moreno
+ * @author Sergio Gerónimo
  */
-public class signUp extends HttpServlet {
+public class ViewPagos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,40 +41,21 @@ public class signUp extends HttpServlet {
         
         try{
             
-            Persona person = new Persona(
-                    request.getParameter("CURP"),
-                    request.getParameter("NOMBRE"),
-                    request.getParameter("APELLIDO"),
-                    request.getParameter("DIRECCION"),
-                    
-                    Long.valueOf(request.getParameter("TELEFONO"))
-            );
-            
-            Usuario user = new Usuario(
-                    0,
-                    request.getParameter("CURP"),
-                    request.getParameter("PASSWORD"),
-                    Boolean.valueOf(request.getParameter("ADMIN"))
-            );
-            
             Connection conx = JConnector.conectDB();
+            Tanda selectedTanda = TandaDAO.getTanda(Integer.valueOf(request.getParameter("ID_TANDA")), conx);
             
-            Persona persona = PersonaDAO.createPersona(person, conx);
-            user = UsuarioDAO.createUsuario(user, conx);
+            Vector<Pago> allPagos = PagoDAO.getAllPagos(selectedTanda.getIdTanda(), conx);
+            Vector<Persona> allDeudores = PagoDAO.getAllDeudores(allPagos, conx);
             
-            
-            HttpSession session = request.getSession(true);
-            session.setAttribute("usuario", user);
-            session.setAttribute("persona", persona);
-            
-            
+            request.setAttribute("allPagos", allPagos);
+            request.setAttribute("allDeudores", allDeudores);
+            request.setAttribute("tanda", selectedTanda);
             
         }catch(NullPointerException nullEx){
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-            System.out.println(nullEx.getMessage());
-            
+            nullEx.printStackTrace();
         }
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        
+        request.getRequestDispatcher("/view/pagos.jsp").forward(request, response);
         
     }
 

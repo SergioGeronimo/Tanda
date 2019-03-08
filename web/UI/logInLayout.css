@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6/03/2019, 02:13:51 AM
+    Author     : Sergio Gerónimo
+*/
+
+.logIn{
+    display: grid;
+    margin: 0px;
+    height: 100vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 2fr 100px;
+    grid-template-areas:
+        "title content"
+        "title content"
+        "description content"
+        ". footer";
+}
+
+.title{
+    grid-area: title;
+    margin: auto;
+}
+
+.content{
+    margin: auto;
+    grid-area: content;
+}
+
+.footer{
+    grid-area: footer;
+}

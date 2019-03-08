@@ -6,6 +6,7 @@
 package com.tanda.DAO;
 
 import com.tanda.DB.Pago;
+import com.tanda.DB.Persona;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +26,9 @@ public interface PagoDAO {
                 + "(NULL, "
                 + "\'" + pago.getCURP() +  "\', "
                 + "\'" + pago.getFecha().toString() + "\', "
-                + "\'" + pago.getIdTanda() + "\', "
-                + "\'NULL\', "
-                + "\'NULL\');";
+                + "" + pago.getIdTanda() + ", "
+                + "0,"
+                + "0);";
         
         try{
             Statement stmt = conx.createStatement();
@@ -139,7 +140,7 @@ public interface PagoDAO {
         
         Vector<Pago> allPagos = new Vector<Pago>();
         
-        String query = "SELECT * FROM `pago` WHERE `ID_TANDA` = \'" + id + "\'";
+        String query = "SELECT * FROM `pago` WHERE `ID_TANDA` = \'" + id + "\' ORDER BY `FECHA` ASC;";
         
         try{
             Statement stmt = conx.createStatement();
@@ -171,6 +172,20 @@ public interface PagoDAO {
         }
         
         return allPagos;
+    }
+    
+    public static Vector<Persona> getAllDeudores(Vector<Pago> allPagos, Connection conx){
+        Vector<Persona> allDeudores = new Vector<Persona>();
+        
+        try{
+            for (int i = 0; i < allPagos.size(); i++){
+                allDeudores.add(PersonaDAO.getPersona(allPagos.elementAt(i).getCURP(), conx));
+            }
+        }catch(NullPointerException nullEx){
+            nullEx.printStackTrace();
+        }
+        
+        return allDeudores;
     }
     
 }

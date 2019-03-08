@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 25/02/2019, 08:31:45 PM
-    Author     : Sergio Gerónimo
+    Author     : Jahaziel A. Sanchez Moreno
 --%>
 
 <%@page import="com.tanda.DB.Persona"%>
@@ -31,57 +31,66 @@
             }
         %>
         
-        <title>JSP Page</title>
+        <title>TandApp - Home</title>
     </head>
     <body>
         <%
             if(user == null){
         %>
-        No session logged<br> redirecting you to login
+        <h2>No session logged</h2>
+        <h3>redirecting you to login</h3>
         <%
             }else{
         %>
         
-        <div id="nav">
-            
         
-        </div>
         
-        <div>
+        <div class="title">
             <h1>Hello <%= persona.getNombre() %></h1>
+            <h3>welcome to your TandApp</h3>
         </div>
+            
+       
         
-        <div>
+        <div class="options">
             
-            <button onclick="toNotifications()">
-                <i class="material-icons">notifications</i>  
-                View notifications
+            <button onclick="toNotifications()" class="void">
+                <i class="material-icons  navButton">notifications</i>  
+                
             </button>
+            View notifications
             
-            <button onclick="toPayements()">
-                <i class="material-icons">payment</i>  
-                Manage my payments
+            <button onclick="toPayements()" class="void">
+                <i class="material-icons  navButton">payment</i>  
+                
             </button>
+            Manage my payments
             
             <%
                 if (user.isAdmin()){
             %>
-            <button onclick="toTandas()">
-                <i class="material-icons">monetization_on</i> 
-                Manage my tandas
+            <button onclick="toTandas()" class="void">
+                <i class="material-icons  navButton">monetization_on</i> 
+                
             </button>
+            Manage my tandas
             <%
                 }
             %>
             
             
-            <button onclick="toUserInfo()">
-                <i class="material-icons">account_circle</i>  
-                View my information
+            <button onclick="toUserInfo()" class="void">
+                <i class="material-icons  navButton">account_circle</i>  
+                
             </button>
+            View my information
             
             <form action="/TandApp/signOut">
-                <input type="submit" value="Log out">
+                <button onclick="this.form.submit()" class="void">
+                    <i class="material-icons navButton">exit_to_app</i>
+                    
+                </button>
+                Log out
             </form>
             
         </div>

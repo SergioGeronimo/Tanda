@@ -1,30 +1,28 @@
-package com.tanda.servlet;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.tanda.servlet;
 
 import com.tanda.DAO.JConnector;
+import com.tanda.DAO.PagoDAO;
 import com.tanda.DAO.TandaDAO;
-import com.tanda.DB.Tanda;
+import com.tanda.DB.Pago;
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.Vector;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Uriel
+ * @author Sergio Gerónimo
  */
-@WebServlet(name="tandas", urlPatterns = {"/tandas"})
-public class tandas extends HttpServlet {
+public class RemoveTanda extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,17 +37,21 @@ public class tandas extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-         Connection conx = JConnector.conectDB();
-
-                 
-                  try{
-                   Vector<Tanda> allTandas = TandaDAO.getAllTanda("GEGS980220HCCNRO03",conx);
-                   request.setAttribute("AllTandas", allTandas);
-                  }catch(NullPointerException nullEx){
-                  System.out.println(nullEx.getMessage());}
-                  
-                  
-        request.getRequestDispatcher("tanda.jsp").forward(request, response);          
+        Connection conx = JConnector.conectDB();
+        try{
+            int id = Integer.valueOf(request.getParameter("ID_TANDA"));
+            Vector<Pago> allPagos = PagoDAO.getAllPagos(id, conx);
+            
+            for(int i=0; i < allPagos.size(); i++ ){
+                PagoDAO.deletePago(allPagos.elementAt(i).getId(), conx);
+            }
+            
+            TandaDAO.deleteTanda( id, conx);
+        }catch(NullPointerException nullEx ){
+            nullEx.printStackTrace();
+        }
+        
+        request.getRequestDispatcher("/view/tandas").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

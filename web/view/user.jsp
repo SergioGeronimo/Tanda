@@ -1,7 +1,7 @@
 <%-- 
     Document   : user
     Created on : 3/03/2019, 08:14:14 PM
-    Author     : Sergio Gerónimo
+    Author     : Jahaziel A. Sanchez Moreno
 --%>
 
 <%@page import="com.tanda.DB.Usuario"%>
@@ -86,13 +86,14 @@
 
                 </table>
                         <input type="submit">
+                        
             </form>
             
             <!--<button onclick="toEditUserInfo()">
                 <i class="material-icons">edit</i>
                 Edit my information
             </button>-->
-            
+            <button onclick="toIndex()"><i class="material-icons">home</i></button>
             
              
         </div>

@@ -25,7 +25,7 @@ public interface TandaDAO {
                 + "(NULL, "
                 + "\'" + tanda.getCURP() + "\',"
                 + "\'" + tanda.getMonto() + "\',"
-                + "NULL);";
+                + "0);";
         
         try{
             Statement stmt = conx.createStatement();

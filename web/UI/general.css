@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Sergio Gerónimo
 */
 
-@import url('https://fonts.googleapis.com/css?family=Lobster|Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lobster|Montserrat:400,400i,700');
 
 /*
 #64bc9c green background
@@ -20,14 +20,111 @@ and open the template in the editor.
 */
 
 *{
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    text-align:center;
+    vertical-align: middle;
 }
 
 body{
     background: #64bc9c;
-    color: white;
+    color: #ffffff;
 }
 
-h1, h2, h3{
+div{
+    padding: 10px;
+}
+
+h1, h2{
     font-family: 'Lobster', cursive;
+}
+
+.input {
+    
+    text-align: left;
+    border: solid #ffffff;
+    background-color: #64bc9c;
+    border-radius: 100px;
+    color: #ffffff;
+    padding: 1em;
+    font-weight: bold;
+    margin: 0.5em;
+    width: 75%;
+}
+
+.input:hover{
+    border: solid #64bc9c;
+    background-color: #ffffff;
+    color: #64bc9c;
+    
+}
+.input:hover::placeholder{
+    color: #64bc9cee;
+}
+
+.input::placeholder{
+    color: #ffffffaa;
+}
+
+.input:focus{
+    border: solid #89f657 ;
+}
+
+.input:focus::placeholder{
+    color: #ffffffaa;
+}
+
+.accent{
+    text-align:center;
+    border: solid #89f657;
+    background-color: #89f657;
+    color: #ffffff;
+}
+
+.suggestion{
+    color: #ffffff;
+}
+
+.suggestion:hover{
+    color: #f5f657;
+}
+
+.void{
+    border: solid #ffffff;
+    border-radius: 100px;
+    padding: 0px;
+    background: transparent;
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.void:hover{
+    border: solid #ffffff;
+    border-radius: 100px;
+    padding: 0px;
+    background: #ffffff;
+    color: #ffffff;
+}
+
+.navButton{
+    border: #ffffff;
+    background-color: transparent;
+    border-radius: 100px;
+    color: #ffffff;
+    padding: 0.5em;
+    font-weight: bold;
+    margin: 0px;
+    width: 1em;
+    height: 1em;
+}
+
+.navButton:hover {
+    border: none;
+    background-color: #ffffff;
+    border-radius: 100px;
+    color: #64bc9c;
+    padding: 0.5em;
+    font-weight: bold;
+    margin: 0px;
+    width: 1em;
+    height: 1em;
 }

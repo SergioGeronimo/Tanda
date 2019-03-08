@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    session.invalidate();
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,21 +16,43 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="/TandApp/UI/general.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <title>Log in please</title>
+        <link rel="stylesheet" href="/TandApp/UI/logInLayout.css">
+        <title>TandApp - Log in</title>
         
     </head>
     
-    <body>
+    <body class="logIn">
         
-        <h1 class="title">Hello user! Log into your account</h1>
+        <div class="title">
+            <h1>TandApp</h1>
+        </div>
         
-        <form method="POST" action="logIn">
-            
-            <input type="text" placeholder="User ID" name="ID_USUARIO">
-            <input type="password" placeholder="Password" name="PASSWORD">
-            <input type="submit">
-        </form> 
+         <div class="description">
+            <p>
+                TandApp is a web application for tanda management<br>
+                lorem ipsum
+            </p>
+        </div>
         
-        <a href="/signUp.jsp" class="suggestion">Not a user? Sign up here :)</a>
+        <div class="content">
+            <h3>Hello user! Log into your account</h3>
+            <form method="POST" action="logIn">
+
+                <input class="input" type="text" placeholder="User ID" name="ID_USUARIO">
+                <input class="input" type="password" placeholder="Password" name="PASSWORD">
+                <button class="input accent" onclick="this.form.submit()" >
+                    <i class="material-icons">done</i>
+                </button>
+            </form> 
+        </div>
+        
+        <div class="footer">
+            <a href="/TandApp/signUp.jsp" class="suggestion">
+                
+                <i class="material-icons">sentiment_satisfied_alt</i>
+                Not a user? Sign up here
+            </a>
+        </div>
+        
     </body>
 </html>

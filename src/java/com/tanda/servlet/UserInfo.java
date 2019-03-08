@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Sergio Gerónimo
+ * @author Jahaziel A. Sanchez Moreno
  */
 public class UserInfo extends HttpServlet {
 
